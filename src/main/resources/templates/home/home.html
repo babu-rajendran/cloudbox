@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cloudbox - Home</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+</head>
+<body>
+<h1>Cloudbox</h1>
+<div class="container">
+    <h2>Welcome <span th:utext="${userName}"></span>!</h2>
+
+    <div th:if="${message}">
+        <h2 th:text="${message}"/>
+    </div>
+
+    <div>
+        <form method="POST" enctype="multipart/form-data" action="/storage/upload-file">
+            <table>
+                <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+                <tr><td>Description</td><td><input type="text" name="description" /></td></tr>
+                <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <table border="2px">
+                <th>File Name</th>
+                <th>Description</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Upload Time</th>
+                <th>Last Updated Time</th>
+                <th>Download Link</th>
+                <th>Delete Link</th>
+            </tr>
+            <tr th:each="file : ${files}">
+                <td th:text="${file.filename}"/>
+                <td th:text="${file.description}"/>
+                <td th:text="${file.firstname}"/>
+                <td th:text="${file.lastname}"/>
+                <td th:text="${#dates.format(file.uploaddate, 'dd-MMM-yyyy hh:mm:ss')}"/>
+                <td th:text="${#dates.format(file.updateddate, 'dd-MMM-yyyy hh:mm:ss')}"/>
+                <td> <a th:href="@{/storage/download/} + ${file.filename}" th:text="${file.filename}"/></td>
+                <td> <a th:href="@{/storage/delete-file/} + ${file.id}" th:text="Delete"/></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<div align="left">
+    <h3><a th:href="@{/logout}">Sign out</a></h3>
+</div>
+</body>
+</html>
