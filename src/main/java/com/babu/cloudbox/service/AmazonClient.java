@@ -32,9 +32,9 @@ public class AmazonClient {
 
     private AmazonS3 s3client;
 
-    @Value("${amazonProperties.endpointUrl}")
+    @Value("${amazonProperties.s3.endpointUrl}")
     private String endpointUrl;
-    @Value("${amazonProperties.bucketName}")
+    @Value("${amazonProperties.s3.bucketName}")
     private String bucketName;
     @Value("${amazonProperties.accessKey}")
     private String accessKey;
